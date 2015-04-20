@@ -14,10 +14,12 @@ class BookList {
 
    def addBook(book : Book) : Unit = {
       // write code to add the book to 'list'.
+      // hint: Use the list add (+=) method
    }
 
    def getNumberOfBooks() : Int = list.length
       // instructor has done this for you
+      // using it for testing purposes
 
    def printList() : Unit = {
       // write code to printList()
@@ -25,15 +27,27 @@ class BookList {
    }
 
    def getTitlesByAuthor(author : String) : MutableList[String] = {
+      val byAuthorList = MutableList[String]()
       // return a list of all titles that are written by author
+
+
+      byAuthorList
    }
 
    def getTitlesContaining(substring : String) : MutableList[String] = {
+      val titles = MutableList[String]()
       // return a list of all titles that contain a substring
+
+      titles
    }
 
-   def getBooksBetweenYears(firstYear : Int, lastYear : Int) : Unit = {
+   def getBooksBetweenYears(firstYear : Int, lastYear : Int) : MutableList[Book] = {
+     
+      val betweenYearList = MutableList[Book]()
       // get all books between two years
+
+
+      betweenYearList
    }
 
    def addFromFile(name : String) : Unit = {
