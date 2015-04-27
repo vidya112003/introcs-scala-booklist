@@ -2,56 +2,63 @@ import scala.collection.mutable.ListBuffer
 import scala.util.Try
 import scala.io.Source
 
-// We provide the Book class, which is used to hold book information.
-// You will use it to make a book list.
+
 
 case class Book(title : String, author : String, year : Int)
 
-// Your job is to replace all ??? with your own code.
+
 
 class BookList {
-   var list = ListBuffer[Book]()
+   var list = MutableList[Book]()
 
    def addBook(book : Book) : Unit = {
-      // write code to add the book to 'list'.
-      // hint: Use the list add (+=) method
+   
+       list+=book
    }
 
    def getNumberOfBooks() : Int = list.length
-      // instructor has done this for you
-      // using it for testing purposes
+      
 
    def printList() : Unit = {
-      // write code to printList()
-      // you should also show how to use the method in your main
+       for(books<-list){
+           println(books)
+       }
    }
 
-   def getTitlesByAuthor(author : String) : ListBuffer[String] = {
-      val byAuthorList = ListBuffer[String]()
-      // return a list of all titles that are written by author
+   def getTitlesByAuthor(author : String) : MutableList[String] = {
+      val byAuthorList = MutableList[String]()
+      
 
 
       byAuthorList
    }
 
-   def getTitlesContaining(substring : String) : ListBuffer[String] = {
-      val titles = ListBuffer[String]()
-      // return a list of all titles that contain a substring
-
+   def getTitlesContaining(substring : String) : MutableList[String] = {
+      val titles = MutableList[String]()
+      
+      for(booktitles<-list){
+          if(booktitles.title contains substring){
+              titles+=booktitles.title
+          }
+      }    
       titles
    }
 
-   def getBooksBetweenYears(firstYear : Int, lastYear : Int) : ListBuffer[Book] = {
+   def getBooksBetweenYears(firstYear : Int, lastYear : Int) : MutableList[Book] = {
      
-      val betweenYearList = ListBuffer[Book]()
-      // get all books between two years
-
+      val betweenYearList = MutableList[Book]()
+      
+       for(thebooks<-list){
+           if(thebooks.year>=firstYear&&thebooks.year<=lastYear){
+               betweenYearList+=thebooks
+           }
+       }
 
       betweenYearList
    }
 
    def addFromFile(name : String) : Unit = {
-     // instructor did this one for you...mostly
+     
      for (file <- Try(Source.fromFile(name))) {
         for (line <- file.getLines) {
            val parts = line.split(":")
@@ -65,10 +72,31 @@ class BookList {
            }
         } 
      } 
+       var bookorama=new BookList()
+	   for(books<-list){
+		   bookorama.addBook(books)
+	   }
+	   println(bookorama.getBooksBetweenYears(2000,2013))
    }
 
    def addAll(books : BookList) : Unit = {
-      // instructor did this one for you, too
+     
       books.list foreach { n => list += n }
    }
+}
+object Library extends App{
+	val judyMoody=new Book("Judy Moody","Megan McDonald", 2000)
+	val theHungerGames=new Book("Catching Fire","Suzanne Collins", 2009)
+	var bookworld=new BookList()
+	bookworld.addBook(judyMoody)
+	bookworld.addBook(theHungerGames)
+	var booktastic=new BookList()
+	booktastic.addAll(bookworld)
+	println(">>>")
+	booktastic.printList()
+	println(">>>")
+	println(bookworld.getTitlesByAuthor("Megan McDonald"))
+	println(bookworld.getBooksBetweenYears(2000,2009))
+	println(bookworld.getTitlesContaining("Judy"))
+	bookworld.addFromFile("books.txt")
 }
